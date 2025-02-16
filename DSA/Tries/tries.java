@@ -135,9 +135,7 @@ public class tries {
                 }
                 longestWord(root.children[i], temp);
                 temp.deleteCharAt(temp.length() - 1);// backtrack
-
             }
-
         }
     }
 

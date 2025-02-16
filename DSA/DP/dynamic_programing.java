@@ -405,12 +405,52 @@ public class dynamic_programing {
         }
         return dp[n][m];
     }
+
     // Topic: String Conversion
-    public static int stringConversion(String str1, String str2){
+    public static int stringConversion(String str1, String str2) {
         int lcs = lcs3(str1, str2);
         int delOp = str1.length() - lcs;
         int insOp = str2.length() - lcs;
         return delOp + insOp;
+    }
+
+    // Topic: Wildcard Matching 
+    public static boolean WildcardMatching(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        boolean[][] dp = new boolean[n + 1][m + 1];
+        // Info: Initialize
+        dp[0][0] = true;
+        // Info: Pattern empty
+        // p = " "
+        for (int i = 1; i < n + 1; i++) {
+            dp[i][0] = false;
+        }
+        // s = " "
+        for (int j = 1; j < m + 1; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+        // Info: Fill Bottom up manner
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                // CASE 1: ith character == jth character || jth character == ?
+                if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                // CASE 2: jth character == * 
+                else if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                }
+                // CASE 3: ith character != jth character
+                else {
+                    dp[i][j] = false;
+                }
+            }
+        }
+        // Info: String -> n, pattern -> m
+        return dp[n][m];
     }
 
     public static void main(String[] args) {
@@ -494,5 +534,9 @@ public class dynamic_programing {
         /* String str1 = "heap";
         String str2 = "pea";
         System.out.println(stringConversion(str1, str2)); */
+        // Topic: Wildcard Matching
+        String s = "abc";
+        String p = "**d";
+        System.out.println(WildcardMatching(s, p));
     }
 }
