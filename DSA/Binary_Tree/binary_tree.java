@@ -560,6 +560,6 @@ public class binary_tree {
         // mirror(rootNode2);
         // preorder(rootNode2);
         // Ques: Bottom view of the tree (Using Maps)
-        bottomViewOfTree(rootNode);
+        // bottomViewOfTree(rootNode);
     }
 }
