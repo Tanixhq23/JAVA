@@ -509,6 +509,58 @@ public class dynamic_programing {
         return dp[n];
     }
 
+    // Topic: Mountain Ranges
+    public static int mountainRanges(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i < n + 1; i++) {
+            // Info: Ci -> BST (i Nodes) -> dp[i]
+            for (int j = 0; j < i; j++) {
+                // Info: Ci = Cj * Ci-Cj-1
+                int inside = dp[j];
+                int outside = dp[i - j - 1];
+                dp[i] += inside * outside;
+            }
+        }
+        return dp[n];
+    }
+
+    // Topic: Matrix Chain Multiplication
+    // Info: Recursion
+    public static int MCM1(int[] arr, int i, int j) {
+        if (i == j) {
+            return 0;
+        }
+        int ans = Integer.MAX_VALUE;
+        for (int k = i; k <= j - 1; k++) {
+            int cost1 = MCM1(arr, i, k); // Info: Ai...Ak => arr[i-1] x arr[k]
+            int cost2 = MCM1(arr, k + 1, j); // Info: Ak+1...Aj => arr[k+1] x arr[j]
+            int cost3 = arr[i - 1] * arr[k] * arr[j];
+            int finalcost = cost1 + cost2 + cost3;
+            ans = Math.min(ans, finalcost);
+        }
+        return ans;
+    }
+
+    // Info: Memoization
+    public static int MCM2(int[] arr, int i, int j, int[][] dp) {
+        if (i == j) {
+            return 0;
+        }
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+        int ans = Integer.MAX_VALUE;
+        for (int k = i; k <= j - 1; k++) {
+            int cost1 = MCM2(arr, i, k, dp);
+            int cost2 = MCM2(arr, k + 1, j, dp);
+            int cost3 = arr[i - 1] * arr[k] * arr[j];
+            int finalcost = cost1 + cost2 + cost3;
+            ans = Math.min(ans, finalcost);
+        }
+        return dp[i][j] = ans;
+    }
+
     public static void main(String[] args) {
         // int n = 5;
         // Info: Memoization 
@@ -605,7 +657,20 @@ public class dynamic_programing {
         // Info: Tabulation
         // System.out.println(catalansnumber3(n));
         // Topic: Count BST
-        System.out.println(countBST(5));
-        
+        // System.out.println(countBST(5));
+        // Topic: Mountain Ranges
+        /* int pair = 4;
+        System.out.println(mountainRanges(pair)); */
+        // Topic: Matrix Chain Multiplication
+        // Info: Recursion
+        int arr[] = { 1, 2, 3, 4, 3 };
+        int n = arr.length;
+        // System.out.println(MCM1(arr, 1, n - 1));
+        // Info: Memoization
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        System.out.println(MCM2(arr, 1, n - 1, dp));
     }
 }
