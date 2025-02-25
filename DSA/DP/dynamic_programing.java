@@ -561,6 +561,57 @@ public class dynamic_programing {
         return dp[i][j] = ans;
     }
 
+    // Info: Tabulation
+    public static int MCM3(int[] arr) {
+        int n = arr.length;
+        int[][] dp = new int[n][n];
+        // Info: Initalization
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 0;
+        }
+        // Info: Bottom UP
+        for (int len = 2; len <= n - 1; len++) {
+            for (int i = 1; i <= n - len; i++) {
+                int j = i + len - 1;
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k <= j - 1; k++) {
+                    int cost1 = dp[i][k];
+                    int cost2 = dp[k + 1][j];
+                    int cost3 = arr[i - 1] * arr[k] * arr[j];
+                    dp[i][j] = Math.min(dp[i][j], cost1 + cost2 + cost3);
+                }
+            }
+        }
+        printDP(dp);
+        return dp[1][n - 1];
+    }
+
+    // Topic: Minimum Partition
+    public static int minPart(int arr[]) {
+        int n = arr.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+        }
+        int W = sum / 2;
+        int dp[][] = new int[n + 1][W + 1];
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < W + 1; j++) {
+                // Info: Valid
+                if (arr[i - 1] <= j) {
+                    dp[i][j] = Math.max(arr[i - 1] + dp[i - 1][j - arr[i - 1]], dp[i - 1][j]);
+                } // Info: Invalid
+                else {
+
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        int sum1 = dp[n][W];
+        int sum2 = sum - sum1;
+        return Math.abs(sum1 - sum2);
+    }
+
     public static void main(String[] args) {
         // int n = 5;
         // Info: Memoization 
@@ -663,14 +714,19 @@ public class dynamic_programing {
         System.out.println(mountainRanges(pair)); */
         // Topic: Matrix Chain Multiplication
         // Info: Recursion
-        int arr[] = { 1, 2, 3, 4, 3 };
-        int n = arr.length;
+        /* int arr[] = { 1, 2, 3, 4, 3 };
+        int n = arr.length; */
         // System.out.println(MCM1(arr, 1, n - 1));
         // Info: Memoization
-        int[][] dp = new int[n][n];
+        /* int[][] dp = new int[n][n];
         for (int i = 0; i < n; i++) {
             Arrays.fill(dp[i], -1);
         }
-        System.out.println(MCM2(arr, 1, n - 1, dp));
+        System.out.println(MCM2(arr, 1, n - 1, dp)); */
+        // Info: Tabulation
+        // System.out.println(MCM3(arr));
+        // Topic: Minimum partitioning
+        /* int arr[] = { 1, 5, 11, 5 };
+        System.out.println(minPart(arr)); */
     }
 }
