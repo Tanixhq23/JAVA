@@ -754,6 +754,30 @@ public class dynamic_programing {
         return dp[arr.length - 1];
     }
 
+    // Topic: Print all combination of balanced parentheses
+    // Info: Recursion
+    public static void generateParentheses1(char str[], int pos, int n, int open, int close) {
+        if (close == n) {
+            for (int i = 0; i < str.length; i++) {
+                System.out.print(str[i]);
+            }
+            System.out.println();
+        } else {
+            if (open > close) {
+                if (pos < str.length) { 
+                    str[pos] = '}';
+                    generateParentheses1(str, pos + 1, n, open, close + 1);
+                }
+            }
+            if (open < n) {
+                if (pos < str.length) { 
+                    str[pos] = '{';
+                    generateParentheses1(str, pos + 1, n, open + 1, close);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // int n = 5;
         // Info: Memoization 
@@ -897,6 +921,12 @@ public class dynamic_programing {
         System.out.println(houseRobber2(nums, nums.length-1, dp)); */
         // Info: Tabulation
         // System.out.println(houseRobber3(nums));
-        // Topic: 
+        // Topic: Print all combination of balanced parantheses
+        // Info: Recurison
+        int n = 3;
+        char ch[] = new char[2*n];
+        generateParentheses1(ch, 0, n, 0, 0);
+        // Info: Memoization
+        
     }
 }
