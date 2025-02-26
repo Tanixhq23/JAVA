@@ -182,9 +182,9 @@ public class dynamic_programing {
     }
 
     public static void printDP(boolean[][] dp) {
-        for (int i = 0; i < dp.length; i++) {
+        for (boolean[] dp1 : dp) {
             for (int j = 0; j < dp[0].length; j++) {
-                System.out.print(dp[i][j] + " ");
+                System.out.print(dp1[j] + " ");
             }
             System.out.println();
         }
