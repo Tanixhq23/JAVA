@@ -612,11 +612,153 @@ public class dynamic_programing {
         return Math.abs(sum1 - sum2);
     }
 
+    // Topic: Minimum Array Jumps
+    public static int minArrJumps(int arr[]) {
+        int n = arr.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+        dp[n - 1] = 0;
+        for (int i = n - 2; i >= 0; i--) {
+            int steps = arr[i];
+            int ans = Integer.MAX_VALUE;
+            for (int j = i + 1; j <= i + steps && j < n; j++) {
+                if (dp[j] != -1) {
+                    ans = Math.min(ans, dp[j] + 1);
+                }
+            }
+            if (ans != Integer.MAX_VALUE) {
+                dp[i] = ans;
+            }
+        }
+        printDP(dp);
+        return dp[0];
+    }
+
+    public static void printDP(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // SOl1: 
+    public static int tribonacci(int n) {
+        int dp[] = new int[n + 1];
+        dp[2] = dp[1] = 1;
+
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+        }
+        return dp[n];
+    }
+
+    // Topic: Minimum path sum
+    // Info: Recursive
+    public static int minpathsum1(int[][] grid, int m, int n) {
+        if (m < 0 || n < 0) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (m >= grid.length || n >= grid[0].length) { // Added boundary check
+            return Integer.MAX_VALUE;
+        }
+        if (m == 0 && n == 0) {
+            return grid[0][0];
+        }
+
+        return grid[m][n] + Math.min(minpathsum1(grid, m - 1, n), minpathsum1(grid, m, n - 1));
+    }
+
+    // Info: Memoization
+    public static int minpathsum2(int grid[][], int m, int n, int dp[][]) {
+        if (m < 0 || n < 0) {
+            return Integer.MAX_VALUE;
+        }
+        if (m >= grid.length || n >= grid[0].length) { // Added boundary check
+            return Integer.MAX_VALUE;
+        }
+        if (m == 0 && n == 0) {
+            return grid[0][0];
+        }
+        if (dp[m][n] != -1) {
+            return dp[m][n];
+        }
+        return dp[m][n] = grid[m][n] + Math.min(minpathsum2(grid, m - 1, n, dp), minpathsum2(grid, m, n - 1, dp));
+    }
+
+    // Info: Tabulation
+    public static int minpathsum3(int grid[][]) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dp = new int[m][n];
+
+        dp[0][0] = grid[0][0];
+
+        for (int i = 1; i < n; i++) {
+            dp[0][i] = dp[0][i - 1] + grid[0][i];
+        }
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    // Topic: Houes Robber
+    // Info: Recursion
+    public static int houseRobber(int nums[], int idx) {
+        if (idx == 0) {
+            return nums[idx];
+        }
+        if (idx == 1) {
+            return Integer.max(nums[0], nums[1]);
+        }
+        int rob_curr = nums[idx] + houseRobber(nums, idx - 2);
+        int skip_curr = houseRobber(nums, idx - 1);
+        return Math.max(rob_curr, skip_curr);
+    }
+
+    // Info: Memoization
+    public static int houseRobber2(int nums[], int idx, int[] dp) {
+        if (idx == 0) {
+            return nums[idx];
+        }
+        if (idx == 1) {
+            return Integer.max(nums[0], nums[1]);
+        }
+        if (dp[idx] != -1) {
+            return dp[idx];
+        }
+        int rob_curr = nums[idx] + houseRobber2(nums, idx - 2, dp);
+        int skip_curr = houseRobber2(nums, idx - 1, dp);
+        return dp[idx] = Math.max(rob_curr, skip_curr);
+    }
+
+    // Info: Tabulation
+    public static int houseRobber3(int arr[]) {
+        int[] dp = new int[arr.length];
+        dp[0] = arr[0];
+        dp[1] = Integer.max(arr[0], arr[1]);
+        for (int i = 2; i < arr.length; i++) {
+            // CASE1: If we rob the current house
+            int rob_curr = arr[i] + dp[i - 2];
+            // CASE2: If skip the curr house
+            int skip_curr = dp[i - 1];
+            dp[i] = Math.max(rob_curr, skip_curr);
+        }
+        return dp[arr.length - 1];
+    }
+
     public static void main(String[] args) {
         // int n = 5;
         // Info: Memoization 
-        // int f[] = new int[n + 1];
-        // System.out.println(MemoizationFib(n, f));
+        /* int f[] = new int[n + 1];
+        System.out.println(MemoizationFib(n, f)); */
         // Info: Tabulation 
         // System.out.println(tabFib(n));
         // Info: Climbing Stairs
@@ -662,20 +804,20 @@ public class dynamic_programing {
         int totRod = 8;
         System.out.println(rodCutting(length, prices, totRod)); */
         // Topic: Longest Common Subsequence
-        // String str1 = "abcdge";
-        // String str2 = "abedg";
+        /* String str1 = "abcdge";
+        String str2 = "abedg"; */
         // Info: Recursion
         // System.out.println(lcs1(str1, str2, str1.length(), str2.length()));
         // Info: Memoization
-        // int n = str1.length();
-        // int m = str2.length();
-        // int[][] dp = new int[n + 1][m + 1];
-        // for (int i = 0; i < n + 1; i++) {
-        //     for (int j = 0; j < m + 1; j++) {
-        //         dp[i][j] = -1;
-        //     }
-        // }
-        // System.out.println(lcs2(str1, str2, n, m, dp));
+        /* int n = str1.length();
+        int m = str2.length();
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < m + 1; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        System.out.println(lcs2(str1, str2, n, m, dp)); */
         // Info: Tabulation
         // System.out.println(lcs3(str1, str2));
         // Topic: Longest Common Substring
@@ -683,8 +825,8 @@ public class dynamic_programing {
         String str2 = "ABGCE";
         System.out.println(lcSubstr(str1, str2)); */
         // Topic: Longest Increasing Subsequence
-        // int[] arr = { 50, 3, 10, 7, 40, 80 };
-        // System.out.println(lis(arr));
+        /* int[] arr = { 50, 3, 10, 7, 40, 80 };
+        System.out.println(lis(arr)); */
         // Topic: Edit Distance
         /* String word1 = "intention";
         String word2 = "execution";
@@ -721,12 +863,40 @@ public class dynamic_programing {
         /* int[][] dp = new int[n][n];
         for (int i = 0; i < n; i++) {
             Arrays.fill(dp[i], -1);
-        }
-        System.out.println(MCM2(arr, 1, n - 1, dp)); */
+            }
+            System.out.println(MCM2(arr, 1, n - 1, dp)); */
         // Info: Tabulation
         // System.out.println(MCM3(arr));
         // Topic: Minimum partitioning
         /* int arr[] = { 1, 5, 11, 5 };
         System.out.println(minPart(arr)); */
+        // Topic: Minimum jumps
+        /* int arr[] = { 2, 3, 1, 1, 4 };
+        System.out.println(minArrJumps(arr)); */
+        // Ques: Tribonacci Series
+        // System.out.println(tribonacci(10));
+        // Topic: Minimum path sum
+        // Info: Recursive
+        /* int grid[][] = { { 1, 3, 1 }, { 1, 5, 1 }, { 4, 2, 1 } };
+        System.out.println(minpathsum1(grid, grid.length-1, grid[0].length-1)); */
+        // Info: Memoization
+        /* int[][] dp = new int[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            Arrays.fill(dp[i], -1);
+            }
+            System.out.println(minpathsum2(grid, grid.length - 1, grid[0].length - 1, dp)); */
+        // Info: Tabulation
+        // System.out.println(minpathsum3(grid));
+        // Topic: House Robber
+        // Info: Recursion
+        /* int nums[] = { 1, 2, 3, 1 };
+        System.out.println(houseRobber(nums, nums.length-1)); */
+        // Info: Memoization
+        /* int[] dp = new int [nums.length+1];
+        Arrays.fill(dp, -1);
+        System.out.println(houseRobber2(nums, nums.length-1, dp)); */
+        // Info: Tabulation
+        // System.out.println(houseRobber3(nums));
+        // Topic: 
     }
 }
