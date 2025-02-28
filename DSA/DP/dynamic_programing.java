@@ -754,7 +754,7 @@ public class dynamic_programing {
         return dp[arr.length - 1];
     }
 
-    // Topic: Print all combination of balanced parentheses
+    // SOL: Print all combination of balanced parentheses
     // Info: Recursion
     public static void generateParentheses1(char str[], int pos, int n, int open, int close) {
         if (close == n) {
@@ -778,9 +778,58 @@ public class dynamic_programing {
         }
     }
 
-    // Info: Memoization
-    public static int generateParentheses2(char str[], int pos, int n, int open, int close, String[][] dp) {
-        
+    // Topic: House Robber - III
+    /* public static int HouseRobber3_1(TreeNode curr, HashMap<TreeNode, Integer> dp) {
+        if (curr == null) {
+            return 0;
+        }
+        if (dp.containsKey(curr) == true) {
+            return dp.get(curr);
+        }
+        int not_steal = HouseRobber3_1(curr.left, dp) + HouseRobber3_1(curr.right, dp);
+        int steal = curr.val;
+        if (curr.left != null) {
+            steal += HouseRobber3_1(curr.left.left, dp) + HouseRobber3_1(curr.left.right, dp);
+        }
+        if (curr.right != null) {
+            steal += HouseRobber3_1(curr.right.left, dp) + HouseRobber3_1(curr.right.right, dp);
+        }
+        int val = Math.max(steal, not_steal);
+        dp.put(curr, val);
+        return val;
+    } */
+
+    // SOL4:
+    public static int LIP(int matrix[][]){
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] dp = new int[rows][cols];
+        for (int[] row : dp) {
+            Arrays.fill(row, 1);
+        }
+
+        int maxPath = 1;
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (r > 0 && matrix[r][c] > matrix[r - 1][c]) {
+                    dp[r][c] = Math.max(dp[r][c], dp[r - 1][c] + 1);
+                }
+                if (r < rows - 1 && matrix[r][c] > matrix[r + 1][c]) {
+                    dp[r][c] = Math.max(dp[r][c], dp[r + 1][c] + 1);
+                }
+                if (c > 0 && matrix[r][c] > matrix[r][c - 1]) {
+                    dp[r][c] = Math.max(dp[r][c], dp[r][c - 1] + 1);
+                }
+                if (c < cols - 1 && matrix[r][c] > matrix[r][c + 1]) {
+                    dp[r][c] = Math.max(dp[r][c], dp[r][c + 1] + 1);
+                }
+
+                maxPath = Math.max(maxPath, dp[r][c]);
+            }
+        }
+
+        return maxPath;
     }
 
     public static void main(String[] args) {
@@ -902,7 +951,7 @@ public class dynamic_programing {
         // Topic: Minimum jumps
         /* int arr[] = { 2, 3, 1, 1, 4 };
         System.out.println(minArrJumps(arr)); */
-        // Ques: Tribonacci Series
+        // QUES: Tribonacci Series
         // System.out.println(tribonacci(10));
         // Topic: Minimum path sum
         // Info: Recursive
@@ -926,12 +975,20 @@ public class dynamic_programing {
         System.out.println(houseRobber2(nums, nums.length-1, dp)); */
         // Info: Tabulation
         // System.out.println(houseRobber3(nums));
-        // Topic: Print all combination of balanced parantheses
+        // QUES: Print all combination of balanced parantheses
         // Info: Recurison
-        int n = 3;
+        /* int n = 3;
         char ch[] = new char[2 * n];
-        generateParentheses1(ch, 0, n, 0, 0);
-        // Info: Memoization
-
+        generateParentheses1(ch, 0, n, 0, 0); */
+        // Topic: House Robber - III
+        // NOTE: This code requires tree data structures - Make sure to implement the structure first!
+        /* HashMap<TreeNode, Integer> dp = new HashMap<>();
+        System.out.println(HouseRobber3_1(curr, dp)); */
+        // QUES: Longest Increasing path in Matrix
+        int[][] arr = { { 1, 2, 3, 4 },
+                { 2, 2, 3, 4 },
+                { 3, 2, 3, 4 },
+                { 4, 5, 6, 7 } };
+        System.out.println(LIP(arr));
     }
 }
