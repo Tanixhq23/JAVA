@@ -800,7 +800,7 @@ public class dynamic_programing {
     } */
 
     // SOL4:
-    public static int LIP(int matrix[][]){
+    public static int LIP(int matrix[][]) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         int[][] dp = new int[rows][cols];
@@ -830,6 +830,23 @@ public class dynamic_programing {
         }
 
         return maxPath;
+    }
+
+    // SOL5:
+    public static int countValidParenthesis(int n) {
+        int[] dp = new int[n + 1];
+
+        // Base case
+        dp[0] = 1;
+
+        // Fill dp array using the tabulation method
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] += dp[j] * dp[i - j - 1];
+            }
+        }
+
+        return dp[n];
     }
 
     public static void main(String[] args) {
@@ -951,7 +968,7 @@ public class dynamic_programing {
         // Topic: Minimum jumps
         /* int arr[] = { 2, 3, 1, 1, 4 };
         System.out.println(minArrJumps(arr)); */
-        // QUES: Tribonacci Series
+        // QUES 1:Tribonacci Series
         // System.out.println(tribonacci(10));
         // Topic: Minimum path sum
         // Info: Recursive
@@ -975,7 +992,7 @@ public class dynamic_programing {
         System.out.println(houseRobber2(nums, nums.length-1, dp)); */
         // Info: Tabulation
         // System.out.println(houseRobber3(nums));
-        // QUES: Print all combination of balanced parantheses
+        // QUES 3: Print all combination of balanced parantheses
         // Info: Recurison
         /* int n = 3;
         char ch[] = new char[2 * n];
@@ -984,11 +1001,14 @@ public class dynamic_programing {
         // NOTE: This code requires tree data structures - Make sure to implement the structure first!
         /* HashMap<TreeNode, Integer> dp = new HashMap<>();
         System.out.println(HouseRobber3_1(curr, dp)); */
-        // QUES: Longest Increasing path in Matrix
-        int[][] arr = { { 1, 2, 3, 4 },
+        // QUES 4: Longest Increasing path in Matrix
+        /* int[][] arr = { { 1, 2, 3, 4 },
                 { 2, 2, 3, 4 },
                 { 3, 2, 3, 4 },
                 { 4, 5, 6, 7 } };
-        System.out.println(LIP(arr));
+        System.out.println(LIP(arr)); */
+        // QUES 5: Number of Parenthesis Combinations
+        // System.out.println(countValidParenthesis(4));
+
     }
 }
