@@ -764,18 +764,23 @@ public class dynamic_programing {
             System.out.println();
         } else {
             if (open > close) {
-                if (pos < str.length) { 
+                if (pos < str.length) {
                     str[pos] = '}';
                     generateParentheses1(str, pos + 1, n, open, close + 1);
                 }
             }
             if (open < n) {
-                if (pos < str.length) { 
+                if (pos < str.length) {
                     str[pos] = '{';
                     generateParentheses1(str, pos + 1, n, open + 1, close);
                 }
             }
         }
+    }
+
+    // Info: Memoization
+    public static int generateParentheses2(char str[], int pos, int n, int open, int close, String[][] dp) {
+        
     }
 
     public static void main(String[] args) {
@@ -924,9 +929,9 @@ public class dynamic_programing {
         // Topic: Print all combination of balanced parantheses
         // Info: Recurison
         int n = 3;
-        char ch[] = new char[2*n];
+        char ch[] = new char[2 * n];
         generateParentheses1(ch, 0, n, 0, 0);
         // Info: Memoization
-        
+
     }
 }
