@@ -992,7 +992,7 @@ public class dynamic_programing {
         System.out.println(houseRobber2(nums, nums.length-1, dp)); */
         // Info: Tabulation
         // System.out.println(houseRobber3(nums));
-        // QUES 3: Print all combination of balanced parantheses
+        // QUES 2: Print all combination of balanced parantheses
         // Info: Recurison
         /* int n = 3;
         char ch[] = new char[2 * n];
@@ -1009,6 +1009,5 @@ public class dynamic_programing {
         System.out.println(LIP(arr)); */
         // QUES 5: Number of Parenthesis Combinations
         // System.out.println(countValidParenthesis(4));
-
     }
 }
