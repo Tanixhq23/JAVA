@@ -1,4 +1,4 @@
-public class Segment_trees {
+public class Segment_trees1 {
     // Topic: Creation of Segment Tree
     static int tree[];
 
