@@ -60,8 +60,11 @@ public class Max_Segment_tree {
             return;
         }
         // CASE 2: Overlap
-        tree[i] = Math.max(tree[i], newval);
+        if (si == sj) {
+            tree[i] = newval;
+        }
         if (si != sj) {
+            tree[i] = Math.max(tree[i], newval);
             int mid = (si + sj) / 2;
             updateSTUtil(2 * i + 1, si, mid, idx, newval);
             updateSTUtil(2 * i + 2, mid + 1, sj, idx, newval);
