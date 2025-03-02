@@ -1,4 +1,4 @@
-public class Segment_trees1 {
+public class Segment_trees {
     // Topic: Creation of Segment Tree
     static int tree[];
 
@@ -49,7 +49,7 @@ public class Segment_trees1 {
     public static void updateST(int arr[], int idx, int newval) {
         int diff = newval - arr[idx];
         arr[idx] = newval;
-        updateSTUtil(0, 0, arr.length-1, idx, diff);
+        updateSTUtil(0, 0, arr.length - 1, idx, diff);
     }
 
     public static void updateSTUtil(int i, int si, int sj, int idx, int diff) {
